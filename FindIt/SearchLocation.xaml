@@ -1,0 +1,167 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="FindIt.SearchLocation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="HideTextBlock">
+            <DoubleAnimation 
+                Duration="0:0:0.4"
+                From="120"
+                To="0"
+                Storyboard.TargetProperty="Height"
+                Storyboard.TargetName="HelpText"
+                d:IsOptimized="True" />
+        </Storyboard>
+        <Storyboard x:Name="UnhideTextBlock">
+            <DoubleAnimation
+                Duration="0:0:0.4" 
+                From="0"
+                To="120"
+                Storyboard.TargetProperty="Height"
+                Storyboard.TargetName="HelpText"
+                d:IsOptimized="True" />
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Background.jpg" Stretch="None" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0">
+            <TextBlock Text="Find It!" Foreground="White" FontSize="76" Margin="22,0,0,0">
+            </TextBlock>
+        </Grid>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="1" Margin="12,0,0,0">
+            <TextBlock Text="{Binding Path=LocalizedResources.SearchLocation, Source={StaticResource LocalizedStrings}}" 
+                       Foreground="Black"
+                       Margin="9,-7,0,0" FontSize="40"/>
+        </StackPanel>
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Visibility="Visible" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="85" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock  Margin="20,0,12,0"
+                Name="HelpText"
+                Grid.Row="0"
+                TextWrapping="Wrap"
+                Visibility="Visible"
+                Height="120"
+                Foreground="Black">
+                Enter the name of the location you want to search for in the box below. For example, if you want to search for Los Angeles please type "Los Angeles, California" without the quotes.
+            </TextBlock>
+
+            <TextBox  Margin="12,0,12,0" Name="SearchText" Grid.Row="1" />
+            <Grid Grid.Row="2"  Margin="12,0,12,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="155" />
+                </Grid.ColumnDefinitions>
+                <Button Name="Search"
+                        Grid.Column="0"
+                    Height="85" 
+                    Width="300"
+                    Content="search"
+                    FontSize="{StaticResource PhoneFontSizeLarge}"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Top"
+                    Tap="Search_Tap"
+                    Foreground="White"
+                        Background="Black">
+                    
+                </Button>
+                <Button Name="Add"
+                        Grid.Column="1"
+                        Height="85"
+                        Width="155"
+                        Content="add"
+                        FontSize="{StaticResource PhoneFontSizeLarge}"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Top"
+                        Tap="Add_Tap"
+                        Foreground="White"
+                        Background="Black">
+                    
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <TextBlock Name="MessageDisplayBox" 
+                           Foreground="Red"
+                           Visibility="Collapsed"
+                           VerticalAlignment="Bottom" 
+                           Height="80" Width="auto" />
+            </Grid>
+            <Grid Grid.Row="3">
+                <maps:Map Name="LocationMap" Loaded="LocationMap_Loaded" Height="auto" Visibility="Collapsed" Margin="0,0,0,10"/>
+                <Grid  VerticalAlignment="Bottom" Background="#FF4B4B4B" Height="80" Margin="0,0,0,0" Width="480">
+                    <Ads:AdControl x:Name="AdBasic"
+                FallbackAdProviderName="AdDuplex"
+                IsTest="False"
+                xmlns:Ads="clr-namespace:MC.Phone.Ads;assembly=MC.Phone.Ads"
+                xmlns:PubCenter="clr-namespace:MC.Phone.Ads.PubCenter;assembly=MC.Phone.Ads.PubCenter"
+                xmlns:AdMob="clr-namespace:MC.Phone.Ads.AdMob;assembly=MC.Phone.Ads.AdMob"
+                xmlns:Provider="clr-namespace:MC.Phone.Ads.Provider;assembly=MC.Phone.Ads"
+                xmlns:AdDuplex="clr-namespace:MC.Phone.Ads.AdDuplex;assembly=MC.Phone.Ads.AdDuplex">
+                        <Ads:AdControl.AdProviders>
+                            <Provider:GenericAdProviderForXaml XamlUri="http://remoteurlontheinternet.com/Ad.xaml?appid={0}" />
+                            <Provider:NoneAdProvider />
+                            <AdMob:AdMobAdProvider AdUnit="ca-app-pub-4218640224248465/2114941556" />
+
+                            <PubCenter:PubCenterAdProvider Application="bbae1157-87f5-4b3b-88f2-013b1b4478f9"
+                                        AdUnit="10327678" />
+                            <AdDuplex:AdDuplexAdProvider App="64995" />
+                        </Ads:AdControl.AdProviders>
+                    </Ads:AdControl>
+                </Grid>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</phone:PhoneApplicationPage>

@@ -1,0 +1,36 @@
+﻿<vm:LocationModel
+    xmlns="http://schemas.microsoft.com/client/2007"
+    xmlns:vm="clr-namespace:FindIt.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <vm:LocationModel.Custom>
+        <vm:LocationGroup Title="saved locations">
+            <vm:LocationGroup.Items>
+                <vm:LocationData Title="home"></vm:LocationData>
+                <vm:LocationData Title="office"></vm:LocationData>
+                <vm:LocationData Title="base camp"></vm:LocationData>
+            </vm:LocationGroup.Items>
+        </vm:LocationGroup>
+    </vm:LocationModel.Custom>
+
+    <vm:LocationModel.Poi>
+        <vm:PoiGroup Title="ATM">
+            <vm:PoiGroup.Items>
+                <vm:PoiData Title="ATMs" />
+                <vm:PoiData Title="Restaurant" />
+            </vm:PoiGroup.Items>
+        </vm:PoiGroup>
+    </vm:LocationModel.Poi>
+
+    <vm:LocationModel.Famous>
+        <vm:LocationGroup Title="famous locations">
+            <vm:LocationGroup.Items>
+                <vm:LocationData Title="chicago" />
+                <vm:LocationData Title="newyork" />
+                <vm:LocationData Title="collosseum" />
+                <vm:LocationData Title="taj mahal" />
+                <vm:LocationData Title="pyramids of giza" />
+            </vm:LocationGroup.Items>
+        </vm:LocationGroup>
+    </vm:LocationModel.Famous>
+
+</vm:LocationModel>

@@ -1,0 +1,426 @@
+﻿<phone:PhoneApplicationPage xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"  xmlns:GoogleAds="clr-namespace:GoogleAds;assembly=GoogleAds"  BackKeyPress="PhoneApplicationPage_BackKeyPress"
+    x:Class="FindIt.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:FindIt.ViewModels"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:myUserControl="clr-namespace:FindIt"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    
+    d:DataContext="{d:DesignData SampleData/SampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="PoiDataTemplate">
+            <Grid Margin="0,0,0,15" Grid.Row="0">
+                <Grid Name="MainGrid" Opacity="1" Visibility="Visible">
+                    <Grid.Background>
+                        <SolidColorBrush>
+                            <Color>#ff00bfff</Color>
+                        </SolidColorBrush>
+                    </Grid.Background>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Background="White" Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <TextBlock Text="{Binding Title}" 
+                                   FontSize="30" Margin="10,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="White"/>
+                    </Grid>
+                </Grid>
+                <!--<ProgressBar x:Name="ATMBar" Visibility="Collapsed"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,-15,0,0"
+                                                 IsIndeterminate="True"
+                                                 Style="{StaticResource CustomIndeterminateProgressBar}" />-->
+
+            </Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+
+    <Grid x:Name="LayoutRoot">
+
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Background.jpg" Stretch="None" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <!--<Grid.Background>
+                <ImageBrush ImageSource="/Assets/LogoBackground.png" Stretch="None" AlignmentX="Left"/>
+            </Grid.Background>-->
+            <TextBlock Text="Find It!" Foreground="White" FontSize="76" Margin="22,0,0,0" Grid.ColumnSpan="2">
+            </TextBlock>
+        </Grid>
+        <Grid Grid.Row="1">
+
+
+            <phone:Panorama Name="Pano">
+                <!--<phone:Panorama.Background>
+                    <ImageBrush ImageSource="/Assets/PanoramaBackground.jpg" Stretch="None" />
+            </phone:Panorama.Background>-->
+
+                <!--Panorama item one-->
+                <phone:PanoramaItem Header="{Binding Path=LocalizedResources.AroundMe, Source={StaticResource LocalizedStrings}}" 
+                                    Foreground="Black">
+                    <!--Double wide Panorama with large image placeholders-->
+
+                    <ScrollViewer  Margin="12,-35,0,75">
+                        <Grid Name="MainGrid" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                                <RowDefinition Height="75" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Name="ATMGrid" Grid.Row="0" Height="65" Tap="ATMGrid_Tap"
+                                  MouseEnter="ATMGrid_MouseEnter" MouseLeave="ATMGrid_MouseLeave">
+                                <Grid Name="ATMMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/ATM.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="ATMs" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid MouseEnter="RestaurantGrid_MouseEnter" MouseLeave="RestaurantGrid_MouseLeave"
+                                  Grid.Row="1" Height="65" Name="RestaurantGrid" Tap="RestaurantGrid_Tap">
+                                <Grid Name="RestaurantMain" Opacity="1" Visibility="Visible">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Restaurant.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Restaurants" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid MouseEnter="HospitalGrid_MouseEnter" MouseLeave="HospitalGrid_MouseLeave"
+                                Grid.Row="2" Height="65" Name="HospitalGrid" Tap="HospitalGrid_Tap">
+                                <Grid Name="HospitalMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Hospitals.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Hospitals" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid MouseEnter="PoliceGrid_MouseEnter" MouseLeave="PoliceGrid_MouseLeave"
+                                Grid.Row="3" Height="65" Name="PoliceGrid" Tap="PoliceGrid_Tap">
+                                <Grid Name="PoliceMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Police.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Police" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid MouseEnter="PharmacyGrid_MouseEnter" MouseLeave="PharmacyGrid_MouseLeave"
+                                Grid.Row="4" Height="65" Name="PharmacyGrid" Tap="PharmacyGrid_Tap">
+                                <Grid Name="PharmacyMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Pharmacy.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Pharmacy" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid MouseEnter="FuelGrid_MouseEnter" MouseLeave="FuelGrid_MouseLeave"
+                                Grid.Row="5" Height="65" Name="FuelGrid" Tap="FuelGrid_Tap">
+                                <Grid Name="FuelMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Fuel.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Fuel Stations" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid MouseEnter="TrainGrid_MouseEnter" MouseLeave="TrainGrid_MouseLeave"
+                                Grid.Row="6" Height="65" Name="TrainGrid" Tap="TrainGrid_Tap">
+                                <Grid Name="TrainMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Train.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Train Stations" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid MouseEnter="MovieGrid_MouseEnter" MouseLeave="MovieGrid_MouseLeave"
+                                Grid.Row="7" Height="65" Name="MovieGrid" Tap="MovieGrid_Tap">
+                                <Grid Name="MovieMain" Opacity="1" Visibility="Visible">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Width="65" HorizontalAlignment="Left"
+                          Height="65" Margin="0, 0, 0, 0">
+                                        <Image Source="/Assets/Icons/Movie.jpg" Width="65" Height="65" />
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Movie Theaters" 
+                                   FontSize="38" Margin="20,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="Black"/>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+                    </ScrollViewer>
+                </phone:PanoramaItem>
+
+                <!--Panorama item two-->
+                <phone:PanoramaItem Orientation="Vertical" Header="{Binding Path=LocalizedResources.Poi, Source={StaticResource LocalizedStrings}}" Foreground="Black">
+                    <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
+                    <!--<phone:LongListSelector Margin="0,-40,0,0"
+                                            LayoutMode="Grid"
+                                            GridCellSize="150,150"
+                                        ItemsSource="{Binding Famous.Items}"
+                                        ItemTemplate="{StaticResource FamousLocationsDataTemplate}" 
+                                        SelectionChanged="FamousLocationsSelectionChanged"/>-->
+                    <Grid Margin="12,-20,0,75">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="175" />
+                            <RowDefinition Height="80" />
+                            <!--<RowDefinition Height="90" />-->
+                            <RowDefinition Height="90" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" FontSize="26" TextWrapping="Wrap">Search for your point of interests and find them right around you. If you are looking for a coffee shop, simply type "coffee" and hit the button.</TextBlock>
+                        <Grid Grid.Row="1">
+                            <TextBox Name="SearchTermBox" Margin="-12,0,-12,0" Height="80"></TextBox>
+                        </Grid>
+
+                        <Button Grid.Row="2" Width="80" BorderThickness="0"  Height="80" Tap="SearchForPoi_Tap" Background="Black">
+                            <Button.Content>
+                                <Image Source="/Assets/Search.png" Stretch="Uniform" Width="60" Height="60" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button.Content>
+                        </Button>
+
+                    </Grid>
+
+                </phone:PanoramaItem>
+
+                <!--Panorama item three-->
+                <phone:PanoramaItem
+                Name="Saved"
+                Loaded="MainPage_Loaded"
+                Header="{Binding Path=LocalizedResources.SavedLocations, 
+                Source={StaticResource LocalizedStrings}}"
+                Foreground="Black">
+                    <phone:LongListSelector 
+                    Margin="12,-20,0,75" 
+                    ItemsSource="{Binding Custom.Items}"
+                    SelectionChanged="LongListSelector_SelectionChanged">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,7" VerticalAlignment="Bottom" Opacity="1">
+                                    <StackPanel.Background>
+                                        <SolidColorBrush>
+                                            <Color>#5affffff</Color>
+                                        </SolidColorBrush>
+                                    </StackPanel.Background>
+                                    <TextBlock Text="{Binding Title}" 
+                                           FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                           Margin="0, 0, 0, 6"
+                                           Foreground="Black"
+                                           />
+                                    <toolkit:ContextMenuService.ContextMenu>
+                                        <toolkit:ContextMenu IsFadeEnabled="True" x:Name="ContextMenu">
+                                            <toolkit:MenuItem x:Name="Delete" Header="delete" Click="Delete_Click" />
+                                        </toolkit:ContextMenu>
+                                    </toolkit:ContextMenuService.ContextMenu>
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </phone:PanoramaItem>
+
+
+
+            </phone:Panorama>
+
+            <Grid  VerticalAlignment="Bottom" Background="#FF4B4B4B" Height="80" Margin="0,0,0,70" Width="480">
+                <Ads:AdControl x:Name="AdBasic"
+                FallbackAdProviderName="AdDuplex"
+                IsTest="False"
+                xmlns:Ads="clr-namespace:MC.Phone.Ads;assembly=MC.Phone.Ads"
+                xmlns:PubCenter="clr-namespace:MC.Phone.Ads.PubCenter;assembly=MC.Phone.Ads.PubCenter"
+                xmlns:AdMob="clr-namespace:MC.Phone.Ads.AdMob;assembly=MC.Phone.Ads.AdMob"
+                xmlns:Provider="clr-namespace:MC.Phone.Ads.Provider;assembly=MC.Phone.Ads"
+                xmlns:AdDuplex="clr-namespace:MC.Phone.Ads.AdDuplex;assembly=MC.Phone.Ads.AdDuplex">
+                    <Ads:AdControl.AdProviders>
+                        <Provider:GenericAdProviderForXaml XamlUri="http://remoteurlontheinternet.com/Ad.xaml?appid={0}" />
+                        <Provider:NoneAdProvider />
+                        <AdMob:AdMobAdProvider AdUnit="ca-app-pub-4218640224248465/2114941556" />
+
+                        <PubCenter:PubCenterAdProvider Application="bbae1157-87f5-4b3b-88f2-013b1b4478f9"
+                                        AdUnit="10327678" />
+                        <AdDuplex:AdDuplexAdProvider App="64995" />
+
+                    </Ads:AdControl.AdProviders>
+                </Ads:AdControl>
+            </Grid>
+
+        </Grid>
+
+        <!--<Grid Grid.Row="2">
+            <adRotator:AdRotatorControl x:Name="AdRotatorControl" Width="480"
+    SettingsUrl="http://mydomain.com/myAdSettings.xml" IsEnabled="True"
+                                        DefaultAdType="AdMob" />
+        </Grid>-->
+        <!--Uncomment to see an alignment grid to help ensure your controls are
+            aligned on common boundaries.  The image has a top margin of -32px to
+            account for the System Tray. Set this to 0 (or remove the margin altogether)
+            if the System Tray is hidden.
+
+            Before shipping remove this XAML and the image itself.-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
+
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="White" IsMenuEnabled="True" Mode="Default" Opacity="0.8" ForegroundColor="Black" >
+
+            <shell:ApplicationBarIconButton IconUri="/Assets/Add.png" Text="add" Click="appBarButton_Click" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="settings" Click="settingsMenu_Click" />
+                <shell:ApplicationBarMenuItem Text="about" Click="aboutMenu_Click" />
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</phone:PhoneApplicationPage>

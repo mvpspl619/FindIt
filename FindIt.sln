@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindIt", "FindIt\FindIt.csproj", "{4976E307-8525-4523-9D90-4E00900C7A99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
+		Mine|Any CPU = Mine|Any CPU
+		Mine|ARM = Mine|ARM
+		Mine|x86 = Mine|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|ARM.Build.0 = Debug|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|ARM.Deploy.0 = Debug|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|x86.ActiveCfg = Debug|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|x86.Build.0 = Debug|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Debug|x86.Deploy.0 = Debug|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|Any CPU.ActiveCfg = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|Any CPU.Build.0 = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|Any CPU.Deploy.0 = Debug|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|ARM.ActiveCfg = Mine|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|ARM.Build.0 = Mine|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|ARM.Deploy.0 = Mine|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|x86.ActiveCfg = Mine|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|x86.Build.0 = Mine|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Mine|x86.Deploy.0 = Mine|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|ARM.ActiveCfg = Release|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|ARM.Build.0 = Release|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|ARM.Deploy.0 = Release|ARM
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|x86.ActiveCfg = Release|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|x86.Build.0 = Release|x86
+		{4976E307-8525-4523-9D90-4E00900C7A99}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

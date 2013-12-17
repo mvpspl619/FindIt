@@ -1,0 +1,162 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="FindIt.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Background.jpg" Stretch="None" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0">
+            <TextBlock Text="Find It!" Foreground="White" FontSize="76" Margin="22,0,0,0">
+            </TextBlock>
+        </Grid>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="1" Margin="12,0,0,0">
+            <TextBlock Text="{Binding Path=LocalizedResources.Settings, Source={StaticResource LocalizedStrings}}" 
+                       Foreground="Black"
+                       Margin="9,-7,0,0" FontSize="40"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="130" />
+                <RowDefinition Height="130" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Name="ShowRadius" 
+                       FontSize="24" FontWeight="SemiBold" Foreground="Black" Margin="24,0,12,0"/>
+            <Grid Grid.Row="1" VerticalAlignment="Top" Height="80" Margin="24,15,24,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="55" />
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock VerticalAlignment="Center" Text="200m" Grid.Column="0" Foreground="Black" />
+                <Slider VerticalAlignment="Center"  Grid.Column="1" Margin="0,33,0,0"
+                    x:Name="RadiusSlider"
+                    ValueChanged="RadiusSlider_ValueChanged" Height="117"
+                        Background="White" Foreground="Black">
+                </Slider>
+                <TextBlock Grid.Column="2"  VerticalAlignment="Center" Text="5km" Foreground="Black"/>
+            </Grid>
+
+            <toolkit:ToggleSwitch Grid.Row="2" Margin="12,0,12,0" x:Name="AccessLocationSwitch"
+                                  Header="Allow access to location" Foreground="Black" Background="White" Checked="AccessLocationSwitch_Checked"
+                                  Unchecked="AccessLocationSwitch_Unchecked" >
+                <toolkit:ToggleSwitch.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="24"
+                           FontWeight="SemiBold" Foreground="Black" Text="{Binding}" />
+                    </DataTemplate>
+                </toolkit:ToggleSwitch.HeaderTemplate>
+            </toolkit:ToggleSwitch>
+
+            <Grid Grid.Row="3" Margin="12,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <toolkit:ListPicker Header="No. of results to show" Name="ListerPickerItem" Grid.Row="1"
+                                    Margin="12,0,0,0" ExpansionMode="ExpansionAllowed" Foreground="Black" >
+                    <toolkit:ListPicker.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="24"
+                           FontWeight="SemiBold" Foreground="Black" Text="{Binding}" />
+                        </DataTemplate>
+                    </toolkit:ListPicker.HeaderTemplate>
+                    <toolkit:ListPickerItem Foreground="Black" Name="five" Content="5" />
+                    <toolkit:ListPickerItem Foreground="Black" Name="ten" Content="10" />
+                    <toolkit:ListPickerItem Foreground="Black" Name="fifteen" Content="15" />
+                    <toolkit:ListPickerItem Foreground="Black" Name="twenty" Content="20" />
+                </toolkit:ListPicker>
+            </Grid>
+
+            <Grid Grid.Row="4"  VerticalAlignment="Bottom" Background="#FF4B4B4B" Height="80" Margin="0,0,0,0" Width="480">
+                <Ads:AdControl x:Name="AdBasic"
+                FallbackAdProviderName="AdDuplex"
+                IsTest="False"
+                xmlns:Ads="clr-namespace:MC.Phone.Ads;assembly=MC.Phone.Ads"
+                xmlns:PubCenter="clr-namespace:MC.Phone.Ads.PubCenter;assembly=MC.Phone.Ads.PubCenter"
+                xmlns:AdMob="clr-namespace:MC.Phone.Ads.AdMob;assembly=MC.Phone.Ads.AdMob"
+                xmlns:Provider="clr-namespace:MC.Phone.Ads.Provider;assembly=MC.Phone.Ads"
+                xmlns:AdDuplex="clr-namespace:MC.Phone.Ads.AdDuplex;assembly=MC.Phone.Ads.AdDuplex">
+                    <Ads:AdControl.AdProviders>
+                        <Provider:GenericAdProviderForXaml XamlUri="http://remoteurlontheinternet.com/Ad.xaml?appid={0}" />
+                        <Provider:NoneAdProvider />
+                        
+                        <AdMob:AdMobAdProvider AdUnit="ca-app-pub-4218640224248465/2114941556" />
+
+                        <PubCenter:PubCenterAdProvider Application="bbae1157-87f5-4b3b-88f2-013b1b4478f9"
+                                        AdUnit="10327678" />
+                        <AdDuplex:AdDuplexAdProvider App="64995" />
+
+                    </Ads:AdControl.AdProviders>
+                </Ads:AdControl>
+            </Grid>
+            <!--<Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Name="PositionAccuracyTextblock" FontWeight="SemiBold"
+                           Margin="12,0,0,0"
+                           FontSize="24"
+                           Foreground="Black" 
+                           Text="PositionAccuracy"/>
+                <toolkit:ListPicker Grid.Row="1" Name="picker" Foreground="Black" ExpansionMode="ExpansionAllowed"
+                                    SelectionChanged="ListPicker_Changed">
+                    <toolkit:ListPickerItem Content="High" />
+                    <toolkit:ListPickerItem Content="Default" />
+                </toolkit:ListPicker>
+                
+            </Grid>-->
+
+        </Grid>
+    </Grid>
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+    
+    
+</phone:PhoneApplicationPage>
